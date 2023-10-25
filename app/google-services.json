@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "976093270284",
+    "project_id": "notes2-5f13e",
+    "storage_bucket": "notes2-5f13e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976093270284:android:e34f622b1d26c82705b929",
+        "android_client_info": {
+          "package_name": "evtomak.iu.edu.notes2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFmakBpXTKnEcJ2GLZPQaw3zgJ-nY--u4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
