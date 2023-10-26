@@ -2,15 +2,16 @@ package evtomak.iu.edu.notes2
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.findNavController
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
     private lateinit var database: DatabaseReference
     private lateinit var auth: FirebaseAuth
+    private lateinit var notesAdapter: NotesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +22,12 @@ class MainActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance().reference
         auth = FirebaseAuth.getInstance()
 
+        // Initialize RecyclerView
+        val recyclerView = findViewById<RecyclerView>(R.id.notesRecyclerView)
+        recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        notesAdapter = NotesAdapter()
+        recyclerView.adapter = notesAdapter
+
         // Check if user is logged in
         if (auth.currentUser == null) {
             navigateToUserScreen()
@@ -30,10 +37,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navigateToUserScreen() {
-        val action = MainActivityDirections.actionMainToUserScreen()
-        findNavController(R.id.nav_host_fragment).navigate(action)
+        // TODO: Implement navigation to UserScreen Fragment
     }
-
 
     private fun showNotes() {
         // TODO: Implement logic to show notes
