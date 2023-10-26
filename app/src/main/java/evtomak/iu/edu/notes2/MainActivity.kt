@@ -21,13 +21,17 @@ class MainActivity : AppCompatActivity() {
 
         // Check if user is logged in
         if (auth.currentUser == null) {
-            // User is not logged in, navigate to UserScreen Fragment
-            // TODO: Implement navigation to UserScreen Fragment
-        }
-        else {
-            // User is logged in, show the list of notes
-            // TODO: Implement logic to show notes
+            navigateToUserScreen()
+        } else {
+            showNotes()
         }
     }
-}
 
+    private fun navigateToUserScreen() {
+        // TODO: Implement navigation to UserScreen Fragment
+    }
+
+    private fun showNotes() {
+        // TODO: Implement logic to show notes
+    }
+}
