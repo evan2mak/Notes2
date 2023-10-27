@@ -1,26 +1,23 @@
 package evtomak.iu.edu.notes2
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import evtomak.iu.edu.notes2.databinding.ItemNoteBinding
 
-class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
-    // TODO: Implement the adapter for displaying notes
+class NotesAdapter(private val notes: List<Note>) : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
 
-    class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        // TODO: Implement the ViewHolder
-    }
+    class NoteViewHolder(val binding: ItemNoteBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
-        // TODO: Implement onCreateViewHolder
+        return NoteViewHolder(ItemNoteBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-        // TODO: Implement onBindViewHolder
+        val note = notes[position]
+        holder.binding.noteTitle.text = note.title
+        holder.binding.notePreview.text = note.content
     }
 
-    override fun getItemCount(): Int {
-        // TODO: Implement getItemCount
-    }
+    override fun getItemCount(): Int = notes.size
 }
