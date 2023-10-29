@@ -1,5 +1,6 @@
 package evtomak.iu.edu.notes2
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,14 +18,16 @@ class NotesListFragment : Fragment() {
     private lateinit var notesAdapter: NotesAdapter
     private val noteViewModel: NoteViewModel by viewModels { NoteViewModelFactory(NoteRepositorySingleton.getInstance()) }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_notes_list, container, false)
 
+        notesAdapter = NotesAdapter { note ->
+            val intent = Intent(context, NoteScreen::class.java).apply {
+                putExtra("noteId", note.id)
+            }
+            startActivity(intent)
+        }
         notesRecyclerView = view.findViewById(R.id.notesRecyclerView)
-        notesAdapter = NotesAdapter()
         notesRecyclerView.adapter = notesAdapter
         notesRecyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 

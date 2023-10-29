@@ -25,6 +25,11 @@ class NoteScreen : AppCompatActivity() {
         saveButton = findViewById(R.id.saveButton)  // Replace with your actual view ID
         deleteButton = findViewById(R.id.deleteNoteButton)  // Replace with your actual view ID
 
+        val noteId = intent.getStringExtra("noteId")
+        if (noteId != null) {
+            loadNoteDetails(noteId)
+        }
+
         saveButton.setOnClickListener {
             val title = titleEditText.text.toString()
             val content = noteEditText.text.toString()
@@ -40,6 +45,17 @@ class NoteScreen : AppCompatActivity() {
 
         deleteButton.setOnClickListener {
             deleteNote()
+        }
+    }
+
+    private fun loadNoteDetails(noteId: String) {
+        val note = noteViewModel.notes.value?.find { it.id == noteId }
+        if (note != null) {
+            titleEditText.setText(note.title)
+            noteEditText.setText(note.content)
+        } else {
+            Toast.makeText(this, "Note not found", Toast.LENGTH_SHORT).show()
+            finish()
         }
     }
 
