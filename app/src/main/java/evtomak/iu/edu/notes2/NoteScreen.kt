@@ -55,8 +55,16 @@ class NoteScreen : AppCompatActivity() {
         }
 
         deleteButton.setOnClickListener {
-            showDeleteConfirmationDialog()
+            if (existingNoteId == null) {
+                // If creating a new note, just finish the activity
+                finish()
+            }
+            else {
+                // If editing an existing note, show delete confirmation dialog
+                showDeleteConfirmationDialog()
+            }
         }
+
     }
 
     private fun loadNoteDetails(noteId: String) {
@@ -76,11 +84,8 @@ class NoteScreen : AppCompatActivity() {
             val note = noteViewModel.notes.value?.find { it.id == noteId }
             if (note != null) {
                 noteViewModel.deleteNote(note)
-                finish()
             }
-            else {
-                Toast.makeText(this, "Note not found", Toast.LENGTH_SHORT).show()
-            }
+            finish()
         }
     }
 

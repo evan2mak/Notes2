@@ -15,7 +15,14 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!-- Add buttons here if needed -->
+        <ImageButton
+            android:id="@+id/userScreenButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_myplaces"
+            android:background="?attr/selectableItemBackground"
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp" />
 
         <ImageButton
             android:id="@+id/addNoteButton"
@@ -23,20 +30,10 @@
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_input_add"
             android:background="?attr/selectableItemBackground"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-            android:id="@+id/userScreenButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_myplaces"
-            android:background="?attr/selectableItemBackground"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_gravity="end"
+            android:layout_marginEnd="8dp" />
     </androidx.appcompat.widget.Toolbar>
+
 
     <!-- RecyclerView to display the list of notes -->
     <androidx.recyclerview.widget.RecyclerView
