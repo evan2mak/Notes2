@@ -1,8 +1,10 @@
 package evtomak.iu.edu.notes2
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class UserRepository {
     private val firebaseAuth = FirebaseAuth.getInstance()
@@ -22,8 +24,11 @@ class UserRepository {
                     firebaseAuth.currentUser?.let {
                         _user.value = User(it.uid, it.email!!)
                     }
-                } else {
-                    // Handle login failure
+                    Log.d("FirebaseAuth", "Login successful")
+                }
+                else {
+                    Log.e("FirebaseAuth", "Login failed", task.exception)
+                    _user.value = null
                 }
             }
     }
@@ -33,13 +38,25 @@ class UserRepository {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     firebaseAuth.currentUser?.let {
-                        _user.value = User(it.uid, it.email!!)
+                        val user = User(it.uid, it.email!!)
+                        _user.value = user
+                        saveUserToDatabase(user)
                     }
-                } else {
-                    // Handle registration failure
+                    Log.d("FirebaseAuth", "Registration successful")
+                }
+                else {
+                    Log.e("FirebaseAuth", "Registration failed", task.exception)
+                    _user.value = null
                 }
             }
     }
+
+
+    private fun saveUserToDatabase(user: User) {
+        val database = FirebaseDatabase.getInstance().reference
+        database.child("users").child(user.id).setValue(user)
+    }
+
 
     fun logout() {
         firebaseAuth.signOut()

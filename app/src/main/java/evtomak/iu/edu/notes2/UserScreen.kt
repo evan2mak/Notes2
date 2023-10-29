@@ -5,16 +5,27 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 
 class UserScreen : Fragment() {
     private lateinit var userViewModel: UserViewModel
+    private lateinit var emailEditText: EditText
+    private lateinit var passwordEditText: EditText
+    private var hasNavigated = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val view = inflater.inflate(R.layout.fragment_user_screen, container, false)
+        emailEditText = view.findViewById(R.id.emailEditText)
+        passwordEditText = view.findViewById(R.id.passwordEditText)
+
         // Initialize UserRepository
         val userRepository = UserRepository()
 
@@ -22,15 +33,46 @@ class UserScreen : Fragment() {
         val factory = UserViewModelFactory(userRepository)
         userViewModel = ViewModelProvider(this, factory).get(UserViewModel::class.java)
 
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        (activity as? AppCompatActivity)?.supportActionBar?.hide()
+
+        view.findViewById<Button>(R.id.signInButton).setOnClickListener { onSignInClicked(it) }
+        view.findViewById<Button>(R.id.signUpButton).setOnClickListener { onSignUpClicked(it) }
+        view.findViewById<Button>(R.id.signOutButton).setOnClickListener { onSignOutClicked(it) }
+
         userViewModel.user.observe(viewLifecycleOwner) { user ->
-            if (user != null) {
-                // User is logged in, navigate to notes list
+            if (user != null && !hasNavigated) {
                 findNavController().navigate(R.id.action_userScreen_to_notesListFragment)
+                hasNavigated = true
             }
         }
+    }
 
-        // TODO: Implement user authentication UI and logic
+    override fun onDestroyView() {
+        super.onDestroyView()
+        userViewModel.user.removeObservers(viewLifecycleOwner)
+    }
 
-        return inflater.inflate(R.layout.fragment_user_screen, container, false)
+    private fun onSignInClicked(view: View) {
+        val email = emailEditText.text.toString()
+        val password = passwordEditText.text.toString()
+        userViewModel.login(email, password)
+    }
+
+    private fun onSignUpClicked(view: View) {
+        val email = emailEditText.text.toString()
+        val password = passwordEditText.text.toString()
+        userViewModel.register(email, password)
+    }
+
+    private fun onSignOutClicked(view: View) {
+        userViewModel.logout()
+        Toast.makeText(context, "Signed out successfully.", Toast.LENGTH_SHORT).show()
+        // Optionally, navigate to the login screen
     }
 }

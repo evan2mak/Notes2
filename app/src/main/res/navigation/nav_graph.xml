@@ -18,5 +18,18 @@
         android:id="@+id/notesListFragment"
         android:name="evtomak.iu.edu.notes2.NotesListFragment"
         android:label="Notes List"
-        tools:layout="@layout/fragment_notes_list" />
+        tools:layout="@layout/fragment_notes_list">
+        <action
+            android:id="@+id/action_notesListFragment_to_userScreen"
+            app:destination="@id/userScreen" />
+        <action
+            android:id="@+id/action_notesListFragment_to_noteScreen"
+            app:destination="@id/noteScreen" />
+    </fragment>
+
+    <activity
+        android:id="@+id/noteScreen"
+        android:name="evtomak.iu.edu.notes2.NoteScreen"
+        android:label="Note Screen"
+        tools:layout="@layout/activity_note_screen" />
 </navigation>

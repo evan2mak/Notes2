@@ -1,47 +1,49 @@
 package evtomak.iu.edu.notes2
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import android.view.Menu
-import android.view.MenuItem
+import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import java.util.*
 
 class NoteScreen : AppCompatActivity() {
+    private lateinit var titleEditText: EditText
+    private lateinit var noteEditText: EditText
+    private lateinit var saveButton: Button
     private lateinit var noteViewModel: NoteViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_note_screen)
+        setContentView(R.layout.activity_note_screen)  // Replace with your actual layout resource ID
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar1)
-        setSupportActionBar(toolbar)
+        titleEditText = findViewById(R.id.titleEditText)  // Replace with your actual view ID
+        noteEditText = findViewById(R.id.noteEditText)  // Replace with your actual view ID
+        saveButton = findViewById(R.id.saveButton)  // Replace with your actual view ID
+        noteViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
 
-        // Initialize NoteRepository
-        val noteRepository = NoteRepository()
-
-        // Initialize ViewModel
-        val factory = NoteViewModelFactory(noteRepository)
-        noteViewModel = ViewModelProvider(this, factory).get(NoteViewModel::class.java)
-
-        // TODO: Load the note if editing an existing one
-    }
-
-    // ... rest of your code
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.note_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_delete -> {
-                // TODO: Show confirmation dialog and delete the note
-                return true
+        saveButton.setOnClickListener {
+            val title = titleEditText.text.toString()
+            val content = noteEditText.text.toString()
+            if (title.isNotBlank() && content.isNotBlank()) {
+                val note = Note(UUID.randomUUID().toString(), title, content)
+                noteViewModel.addNote(note)
+                finish()
+            } else {
+                Toast.makeText(this, "Title and content cannot be empty", Toast.LENGTH_SHORT).show()
             }
         }
-        return super.onOptionsItemSelected(item)
+    }
+
+    private fun deleteNote() {
+        val noteId = intent.getStringExtra("NOTE_ID") ?: return
+        val note = noteViewModel.notes.value?.find { it.id == noteId }
+        if (note != null) {
+            noteViewModel.deleteNote(note)
+            finish()
+        } else {
+            Toast.makeText(this, "Note not found", Toast.LENGTH_SHORT).show()
+        }
     }
 }

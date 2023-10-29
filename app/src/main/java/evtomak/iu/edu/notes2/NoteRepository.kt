@@ -4,23 +4,27 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
 class NoteRepository {
-    private val _notes = MutableLiveData<List<Note>>()
+    private val _notes = MutableLiveData<List<Note>>(emptyList())
     val notes: LiveData<List<Note>> get() = _notes
 
-    // TODO: Implement note management logic here
-
     fun addNote(note: Note) {
-        // TODO: Implement logic to add a note
-        // Update _notes LiveData
+        val updatedNotes = _notes.value?.toMutableList() ?: mutableListOf()
+        updatedNotes.add(note)
+        _notes.value = updatedNotes
     }
 
     fun updateNote(note: Note) {
-        // TODO: Implement logic to update a note
-        // Update _notes LiveData
+        val updatedNotes = _notes.value?.toMutableList() ?: mutableListOf()
+        val index = updatedNotes.indexOfFirst { it.id == note.id }
+        if (index != -1) {
+            updatedNotes[index] = note
+            _notes.value = updatedNotes
+        }
     }
 
     fun deleteNote(note: Note) {
-        // TODO: Implement logic to delete a note
-        // Update _notes LiveData
+        val updatedNotes = _notes.value?.toMutableList() ?: mutableListOf()
+        updatedNotes.remove(note)
+        _notes.value = updatedNotes
     }
 }
