@@ -2,29 +2,41 @@ package evtomak.iu.edu.notes2
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.database.*
+import android.util.Log
 
 class NoteRepository {
+    private val database = FirebaseDatabase.getInstance()
+    private val notesRef = database.reference.child("notes")
     private val _notes = MutableLiveData<List<Note>>(emptyList())
     val notes: LiveData<List<Note>> get() = _notes
 
+    init {
+        notesRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val notes = mutableListOf<Note>()
+                for (noteSnapshot in snapshot.children) {
+                    val note = noteSnapshot.getValue(Note::class.java)
+                    note?.let { notes.add(it) }
+                }
+                _notes.value = notes
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("NoteRepository", "Failed to read notes", error.toException())
+            }
+        })
+    }
+
     fun addNote(note: Note) {
-        val updatedNotes = _notes.value?.toMutableList() ?: mutableListOf()
-        updatedNotes.add(note)
-        _notes.value = updatedNotes
+        notesRef.child(note.id).setValue(note)
     }
 
     fun updateNote(note: Note) {
-        val updatedNotes = _notes.value?.toMutableList() ?: mutableListOf()
-        val index = updatedNotes.indexOfFirst { it.id == note.id }
-        if (index != -1) {
-            updatedNotes[index] = note
-            _notes.value = updatedNotes
-        }
+        notesRef.child(note.id).setValue(note)
     }
 
     fun deleteNote(note: Note) {
-        val updatedNotes = _notes.value?.toMutableList() ?: mutableListOf()
-        updatedNotes.remove(note)
-        _notes.value = updatedNotes
+        notesRef.child(note.id).removeValue()
     }
 }

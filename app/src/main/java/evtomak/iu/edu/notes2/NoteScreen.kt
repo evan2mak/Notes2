@@ -6,14 +6,13 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import java.util.*
 
 class NoteScreen : AppCompatActivity() {
     private lateinit var titleEditText: EditText
     private lateinit var noteEditText: EditText
     private lateinit var saveButton: Button
-    private val noteViewModel: NoteViewModel by viewModels { NoteViewModelFactory(NoteRepository()) }
+    private val noteViewModel: NoteViewModel by viewModels { NoteViewModelFactory(NoteRepositorySingleton.getInstance()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

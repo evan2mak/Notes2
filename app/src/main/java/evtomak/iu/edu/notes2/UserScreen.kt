@@ -55,8 +55,14 @@ class UserScreen : Fragment() {
     }
 
     private fun onSignInClicked(view: View) {
-        val email = emailEditText.text.toString()
-        val password = passwordEditText.text.toString()
+        val email = emailEditText.text.toString().trim()
+        val password = passwordEditText.text.toString().trim()
+
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(context, "Email and password required.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         userViewModel.login(email, password)
 
         userViewModel.user.observe(viewLifecycleOwner) { user ->
@@ -66,15 +72,36 @@ class UserScreen : Fragment() {
             }
             else {
                 // User is not signed in
+                Toast.makeText(context, "Sign in failed. Please check your credentials.", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
+
     private fun onSignUpClicked(view: View) {
-        val email = emailEditText.text.toString()
-        val password = passwordEditText.text.toString()
+        val email = emailEditText.text.toString().trim()
+        val password = passwordEditText.text.toString().trim()
+
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(context, "Email and password required.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         userViewModel.register(email, password)
+
+        userViewModel.user.observe(viewLifecycleOwner) { user ->
+            if (user != null) {
+                // Navigate to the NotesListFragment when the user is registered successfully
+                findNavController().navigate(R.id.action_userScreen_to_notesListFragment)
+                Toast.makeText(context, "Registration successful.", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                // User registration failed
+                Toast.makeText(context, "Registration failed. Please try again.", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
+
 
     private fun onSignOutClicked(view: View) {
         userViewModel.logout()
