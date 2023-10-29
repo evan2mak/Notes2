@@ -49,9 +49,15 @@ class UserScreen : Fragment() {
         view.findViewById<Button>(R.id.signOutButton).setOnClickListener { onSignOutClicked(it) }
 
         userViewModel.user.observe(viewLifecycleOwner) { user ->
-            if (user != null && !hasNavigated) {
-                findNavController().navigate(R.id.action_userScreen_to_notesListFragment)
-                hasNavigated = true
+            if (user != null) {
+                if (!hasNavigated) {
+                    findNavController().navigate(R.id.action_userScreen_to_notesListFragment)
+                    hasNavigated = true
+                }
+            }
+            else {
+                // User is not signed in, reset hasNavigated to allow future navigation
+                hasNavigated = false
             }
         }
     }
