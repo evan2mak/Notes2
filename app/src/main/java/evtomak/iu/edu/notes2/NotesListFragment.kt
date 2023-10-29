@@ -23,7 +23,15 @@ class NotesListFragment : Fragment() {
         notesAdapter = NotesAdapter()
         notesRecyclerView.adapter = notesAdapter
 
-        noteViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
+        // Create an instance of NoteRepository here (or get it from somewhere)
+        val noteRepository = NoteRepository() // This is just an example, replace it with actual code
+
+        // Create an instance of NoteViewModelFactory
+        val factory = NoteViewModelFactory(noteRepository)
+
+        // Use the factory to get the NoteViewModel
+        noteViewModel = ViewModelProvider(this, factory).get(NoteViewModel::class.java)
+
         noteViewModel.notes.observe(viewLifecycleOwner) { notes ->
             notesAdapter.submitList(notes)
         }
