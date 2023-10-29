@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import java.util.*
@@ -12,7 +13,7 @@ class NoteScreen : AppCompatActivity() {
     private lateinit var titleEditText: EditText
     private lateinit var noteEditText: EditText
     private lateinit var saveButton: Button
-    private lateinit var noteViewModel: NoteViewModel
+    private val noteViewModel: NoteViewModel by viewModels { NoteViewModelFactory(NoteRepository()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +22,6 @@ class NoteScreen : AppCompatActivity() {
         titleEditText = findViewById(R.id.titleEditText)  // Replace with your actual view ID
         noteEditText = findViewById(R.id.noteEditText)  // Replace with your actual view ID
         saveButton = findViewById(R.id.saveButton)  // Replace with your actual view ID
-        noteViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
 
         saveButton.setOnClickListener {
             val title = titleEditText.text.toString()
@@ -42,7 +42,8 @@ class NoteScreen : AppCompatActivity() {
         if (note != null) {
             noteViewModel.deleteNote(note)
             finish()
-        } else {
+        }
+        else {
             Toast.makeText(this, "Note not found", Toast.LENGTH_SHORT).show()
         }
     }
