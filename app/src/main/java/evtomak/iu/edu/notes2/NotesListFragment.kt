@@ -8,6 +8,7 @@ import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class NotesListFragment : Fragment() {
@@ -35,6 +36,7 @@ class NotesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        notesRecyclerView.layoutManager = LinearLayoutManager(context)
         val addNoteButton = view.findViewById<ImageButton>(R.id.addNoteButton)
         val userScreenButton = view.findViewById<ImageButton>(R.id.userScreenButton)
 
