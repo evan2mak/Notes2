@@ -47,8 +47,9 @@ class NotesListFragment : Fragment() {
 
         userScreenButton.setOnClickListener {
             Log.d("NotesListFragment", "User screen button clicked")
+            Log.d("NotesListFragment", "Before back stack: ${findNavController().currentBackStackEntry?.destination}")
             findNavController().navigate(R.id.action_notesListFragment_to_userScreen)
-            Log.d("NotesListFragment", "Current back stack: ${findNavController().currentBackStackEntry?.destination}")
+            Log.d("NotesListFragment", "After back stack: ${findNavController().currentBackStackEntry?.destination}")
         }
     }
 }

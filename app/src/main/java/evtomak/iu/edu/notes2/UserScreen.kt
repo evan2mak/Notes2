@@ -50,9 +50,9 @@ class UserScreen : Fragment() {
 
         userViewModel.user.observe(viewLifecycleOwner) { user ->
             if (user != null) {
-                if (!hasNavigated) {
+                if (!findNavController().previousBackStackEntry?.destination?.id?.equals(R.id.notesListFragment)!!) {
+                    // Only navigate to NotesListFragment if coming from elsewhere
                     findNavController().navigate(R.id.action_userScreen_to_notesListFragment)
-                    hasNavigated = true
                 }
             }
             else {
@@ -82,6 +82,5 @@ class UserScreen : Fragment() {
     private fun onSignOutClicked(view: View) {
         userViewModel.logout()
         Toast.makeText(context, "Signed out successfully.", Toast.LENGTH_SHORT).show()
-        // Optionally, navigate to the login screen
     }
 }
