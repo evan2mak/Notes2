@@ -17,7 +17,6 @@ class UserScreen : Fragment() {
     private lateinit var userViewModel: UserViewModel
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
-    private var hasNavigated = false
     private lateinit var userRepository: UserRepository
 
     override fun onCreateView(
@@ -48,19 +47,6 @@ class UserScreen : Fragment() {
         view.findViewById<Button>(R.id.signInButton).setOnClickListener { onSignInClicked(it) }
         view.findViewById<Button>(R.id.signUpButton).setOnClickListener { onSignUpClicked(it) }
         view.findViewById<Button>(R.id.signOutButton).setOnClickListener { onSignOutClicked(it) }
-
-        userViewModel.user.observe(viewLifecycleOwner) { user ->
-            if (user != null) {
-                if (!findNavController().previousBackStackEntry?.destination?.id?.equals(R.id.notesListFragment)!!) {
-                    // Only navigate to NotesListFragment if coming from elsewhere
-                    findNavController().navigate(R.id.action_userScreen_to_notesListFragment)
-                }
-            }
-            else {
-                // User is not signed in, reset hasNavigated to allow future navigation
-                hasNavigated = false
-            }
-        }
     }
 
     override fun onDestroyView() {
@@ -72,6 +58,16 @@ class UserScreen : Fragment() {
         val email = emailEditText.text.toString()
         val password = passwordEditText.text.toString()
         userViewModel.login(email, password)
+
+        userViewModel.user.observe(viewLifecycleOwner) { user ->
+            if (user != null) {
+                // Always navigate to the NotesListFragment when the user is signed in
+                findNavController().navigate(R.id.action_userScreen_to_notesListFragment)
+            }
+            else {
+                // User is not signed in
+            }
+        }
     }
 
     private fun onSignUpClicked(view: View) {
