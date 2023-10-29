@@ -1,6 +1,7 @@
 package evtomak.iu.edu.notes2
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +26,7 @@ class NotesListFragment : Fragment() {
         notesRecyclerView = view.findViewById(R.id.notesRecyclerView)
         notesAdapter = NotesAdapter()
         notesRecyclerView.adapter = notesAdapter
+        notesRecyclerView.layoutManager = LinearLayoutManager(context)
 
         noteViewModel.notes.observe(viewLifecycleOwner) { notes ->
             notesAdapter.submitList(notes)
@@ -36,7 +38,6 @@ class NotesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        notesRecyclerView.layoutManager = LinearLayoutManager(context)
         val addNoteButton = view.findViewById<ImageButton>(R.id.addNoteButton)
         val userScreenButton = view.findViewById<ImageButton>(R.id.userScreenButton)
 
@@ -45,7 +46,9 @@ class NotesListFragment : Fragment() {
         }
 
         userScreenButton.setOnClickListener {
+            Log.d("NotesListFragment", "User screen button clicked")
             findNavController().navigate(R.id.action_notesListFragment_to_userScreen)
+            Log.d("NotesListFragment", "Current back stack: ${findNavController().currentBackStackEntry?.destination}")
         }
     }
 }

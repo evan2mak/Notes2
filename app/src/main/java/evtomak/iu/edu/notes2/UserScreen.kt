@@ -1,6 +1,7 @@
 package evtomak.iu.edu.notes2
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,7 @@ class UserScreen : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("UserScreen", "onCreateView called")
         val view = inflater.inflate(R.layout.fragment_user_screen, container, false)
         emailEditText = view.findViewById(R.id.emailEditText)
         passwordEditText = view.findViewById(R.id.passwordEditText)
@@ -38,6 +40,7 @@ class UserScreen : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("UserScreen", "onViewCreated called")
 
         (activity as? AppCompatActivity)?.supportActionBar?.hide()
 
