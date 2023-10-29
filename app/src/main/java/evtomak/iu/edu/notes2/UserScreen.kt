@@ -18,6 +18,7 @@ class UserScreen : Fragment() {
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private var hasNavigated = false
+    private lateinit var userRepository: UserRepository
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,8 +29,8 @@ class UserScreen : Fragment() {
         emailEditText = view.findViewById(R.id.emailEditText)
         passwordEditText = view.findViewById(R.id.passwordEditText)
 
-        // Initialize UserRepository
-        val userRepository = UserRepository()
+        // Initialize UserRepository using the Singleton
+        userRepository = UserRepositorySingleton.getInstance()
 
         // Initialize ViewModel
         val factory = UserViewModelFactory(userRepository)

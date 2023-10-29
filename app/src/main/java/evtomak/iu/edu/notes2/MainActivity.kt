@@ -10,6 +10,7 @@ import com.google.firebase.database.FirebaseDatabase
 class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var navController: NavController
+    private lateinit var userRepository: UserRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +22,9 @@ class MainActivity : AppCompatActivity() {
 
         // Initialize the NavController
         navController = findNavController(R.id.nav_host_fragment)
+
+        // Initialize UserRepository using the Singleton
+        userRepository = UserRepositorySingleton.getInstance()
 
         // Check if user is logged in and navigate accordingly
         if (auth.currentUser == null) {

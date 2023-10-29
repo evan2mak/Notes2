@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
 
 class UserRepository {
@@ -17,8 +18,7 @@ class UserRepository {
         if (currentUser != null) {
             // If a user is authenticated, set the user LiveData
             _user.value = User(currentUser.uid, currentUser.email!!)
-        }
-        else {
+        } else {
             // If no user is authenticated, set the user LiveData to null
             _user.value = null
         }
