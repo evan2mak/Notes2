@@ -10,6 +10,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 
@@ -70,7 +73,7 @@ class UserScreen : Fragment() {
 
         userViewModel.login(email, password)
 
-        userViewModel.user.observe(viewLifecycleOwner) { user ->
+        userViewModel.user.observeOnce(viewLifecycleOwner) { user ->
             if (user != null) {
                 // Always navigate to the NotesListFragment when the user is signed in
                 findNavController().navigate(R.id.action_userScreen_to_notesListFragment)
@@ -94,7 +97,7 @@ class UserScreen : Fragment() {
 
         userViewModel.register(email, password)
 
-        userViewModel.user.observe(viewLifecycleOwner) { user ->
+        userViewModel.user.observeOnce(viewLifecycleOwner) { user ->
             if (user != null) {
                 // Navigate to the NotesListFragment when the user is registered successfully
                 findNavController().navigate(R.id.action_userScreen_to_notesListFragment)
@@ -111,5 +114,14 @@ class UserScreen : Fragment() {
     private fun onSignOutClicked(view: View) {
         userViewModel.logout()
         Toast.makeText(context, "Signed out successfully.", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observer<T>) {
+        observe(lifecycleOwner, object : Observer<T> {
+            override fun onChanged(t: T) {
+                removeObserver(this)
+                observer.onChanged(t)
+            }
+        })
     }
 }
