@@ -7,7 +7,31 @@ The functionality is described in more detail below:
 
 ## User Screen
 
+[X] The user screen is where the user will have the ability to sign in, sign up, or sign out of the notes app.
+
+[X] If the user does not have an account, they must sign up with their email and password.
+
+[X] If the user does not have an account and they try to sign in or sign out, an error message will be thrown.
+
+[X] The user also must input both the email and password. If either is empty, it will throw an error message when trying to sign up or sign in.
+
+[X] If the user has an account, they must click sign in. If they click sign up, an error message will be thrown.
+
+[X] Upon successful sign in or sign up, the user will be navigated to the notes list fragment.
+
 ## Notes List Fragment
+
+[X] The notes list fragment displays all of the notes in a 2-column staggered layout.
+
+[X] Each note has a title and a body.
+
+[X] There is also a toolbar at the top of the notes list. It has a title and two buttons.
+
+[X] The add note button allows the user to add a note.
+
+[X] The user screen button allows the user to navigate back to the user screen to either sign out or sign back in.
+
+[X] 
 
 ## Note Screen
 
