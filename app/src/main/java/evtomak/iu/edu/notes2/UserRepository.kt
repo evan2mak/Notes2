@@ -26,7 +26,7 @@ class UserRepository {
     }
 
     // login: Authenticates a user using email and password.
-    fun login(email: String, password: String) {
+    fun login(email: String, password: String, callback: (Boolean) -> Unit) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -34,17 +34,18 @@ class UserRepository {
                     if (currentUser != null) {
                         _user.value = User(currentUser.uid, currentUser.email!!)
                         Log.d("FirebaseAuth", "Login successful")
+                        callback(true)
                     }
-                }
-                else {
+                } else {
                     Log.e("FirebaseAuth", "Login failed", task.exception)
                     _user.value = null
+                    callback(false)
                 }
             }
     }
 
     // register: Registers a new user using email and password.
-    fun register(email: String, password: String) {
+    fun register(email: String, password: String, callback: (Boolean) -> Unit) {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -54,11 +55,12 @@ class UserRepository {
                         _user.value = user
                         saveUserToDatabase(user)
                         Log.d("FirebaseAuth", "Registration successful")
+                        callback(true)
                     }
-                }
-                else {
+                } else {
                     Log.e("FirebaseAuth", "Registration failed", task.exception)
                     _user.value = null
+                    callback(false)
                 }
             }
     }
