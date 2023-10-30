@@ -13,12 +13,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 
+// UserScreen: Fragment for user authentication including sign in, sign up, and sign out.
 class UserScreen : Fragment() {
     private lateinit var userViewModel: UserViewModel
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var userRepository: UserRepository
 
+    // onCreateView: Inflates the layout and initializes UI components.
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,6 +40,7 @@ class UserScreen : Fragment() {
         return view
     }
 
+    // onViewCreated: Sets up UI behavior and event listeners.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d("UserScreen", "onViewCreated called")
@@ -49,11 +52,13 @@ class UserScreen : Fragment() {
         view.findViewById<Button>(R.id.signOutButton).setOnClickListener { onSignOutClicked(it) }
     }
 
+    // onDestroyView: Removes observers when the view is destroyed.
     override fun onDestroyView() {
         super.onDestroyView()
         userViewModel.user.removeObservers(viewLifecycleOwner)
     }
 
+    // onSignInClicked: Handles sign in button click.
     private fun onSignInClicked(view: View) {
         val email = emailEditText.text.toString().trim()
         val password = passwordEditText.text.toString().trim()
@@ -77,7 +82,7 @@ class UserScreen : Fragment() {
         }
     }
 
-
+    // onSignUpClicked: Handles sign up button click.
     private fun onSignUpClicked(view: View) {
         val email = emailEditText.text.toString().trim()
         val password = passwordEditText.text.toString().trim()
@@ -102,7 +107,7 @@ class UserScreen : Fragment() {
         }
     }
 
-
+    // onSignOutClicked: Handles sign out button click.
     private fun onSignOutClicked(view: View) {
         userViewModel.logout()
         Toast.makeText(context, "Signed out successfully.", Toast.LENGTH_SHORT).show()

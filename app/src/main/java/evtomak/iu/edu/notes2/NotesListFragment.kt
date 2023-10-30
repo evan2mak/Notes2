@@ -13,11 +13,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 
+// NotesListFragment: Fragment to display a list of notes and navigate to note details or user screen.
 class NotesListFragment : Fragment() {
     private lateinit var notesRecyclerView: RecyclerView
     private lateinit var notesAdapter: NotesAdapter
     private val noteViewModel: NoteViewModel by viewModels { NoteViewModelFactory(NoteRepositorySingleton.getInstance()) }
 
+    // onCreateView: Inflates the layout and initializes the RecyclerView and adapter.
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_notes_list, container, false)
 
@@ -38,6 +40,7 @@ class NotesListFragment : Fragment() {
         return view
     }
 
+    // onViewCreated: Sets up click listeners for the add note and user screen buttons.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

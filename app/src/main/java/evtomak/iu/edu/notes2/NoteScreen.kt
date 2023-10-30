@@ -10,6 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
 
+// NoteScreen: Activity for creating and editing notes.
 class NoteScreen : AppCompatActivity() {
     private lateinit var titleEditText: EditText
     private lateinit var noteEditText: EditText
@@ -19,6 +20,7 @@ class NoteScreen : AppCompatActivity() {
 
     private var existingNoteId: String? = null
 
+    // onCreate: Initializes the activity, sets up UI elements and event listeners.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_note_screen)
@@ -67,6 +69,7 @@ class NoteScreen : AppCompatActivity() {
 
     }
 
+    // loadNoteDetails: Loads the details of an existing note into the UI.
     private fun loadNoteDetails(noteId: String) {
         val note = noteViewModel.notes.value?.find { it.id == noteId }
         if (note != null) {
@@ -79,6 +82,7 @@ class NoteScreen : AppCompatActivity() {
         }
     }
 
+    // deleteNote: Deletes the current note.
     private fun deleteNote() {
         existingNoteId?.let { noteId ->
             val note = noteViewModel.notes.value?.find { it.id == noteId }
@@ -89,6 +93,7 @@ class NoteScreen : AppCompatActivity() {
         }
     }
 
+    // showDeleteConfirmationDialog: Shows a dialog to confirm note deletion.
     private fun showDeleteConfirmationDialog() {
         AlertDialog.Builder(this)
             .setTitle("Delete Note")
