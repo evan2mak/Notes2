@@ -271,7 +271,9 @@ This clip shows the first user logging out. Next it shows the creation of a seco
 
 Here are some screenshot of the firebase console after the previous video walkthroughs.
 
+![Screenshot (218)](https://github.com/evan2mak/Notes2/assets/128643914/8126ac69-3ad7-481c-abac-238ae83eea15)
 
+![Screenshot (219)](https://github.com/evan2mak/Notes2/assets/128643914/93747de5-b9ae-460e-86e5-13a444176e90)
 
 ## Notes
 
