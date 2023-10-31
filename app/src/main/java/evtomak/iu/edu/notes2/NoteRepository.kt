@@ -15,25 +15,29 @@ class NoteRepository {
 
     // init: Initializes a ValueEventListener to update the list of notes upon any changes in the Firebase Database.
     init {
-        val currentUser = FirebaseAuth.getInstance().currentUser
-        currentUser?.let { user ->
-            val userNotesRef = notesRef.child(user.uid)
-            userNotesRef.addValueEventListener(object : ValueEventListener {
-                // onDataChange: Updates the list of notes when data in Firebase Database changes.
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val notes = mutableListOf<Note>()
-                    for (noteSnapshot in snapshot.children) {
-                        val note = noteSnapshot.getValue(Note::class.java)
-                        note?.let { notes.add(it) }
+        FirebaseAuth.getInstance().addAuthStateListener { auth ->
+            if (auth.currentUser == null) {
+                _notes.value = emptyList() // Clear notes when user logs out
+            }
+            else {
+                val userNotesRef = notesRef.child(auth.currentUser!!.uid)
+                userNotesRef.addValueEventListener(object : ValueEventListener {
+                    // onDataChange: Updates the list of notes when data in Firebase Database changes.
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val notes = mutableListOf<Note>()
+                        for (noteSnapshot in snapshot.children) {
+                            val note = noteSnapshot.getValue(Note::class.java)
+                            note?.let { notes.add(it) }
+                        }
+                        _notes.value = notes
                     }
-                    _notes.value = notes
-                }
 
-                // onCancelled: Logs an error if reading from Firebase Database is canceled.
-                override fun onCancelled(error: DatabaseError) {
-                    Log.e("NoteRepository", "Failed to read notes", error.toException())
-                }
-            })
+                    // onCancelled: Logs an error if reading from Firebase Database is canceled.
+                    override fun onCancelled(error: DatabaseError) {
+                        Log.e("NoteRepository", "Failed to read notes", error.toException())
+                    }
+                })
+            }
         }
     }
 
@@ -62,5 +66,9 @@ class NoteRepository {
             val userNotesRef = notesRef.child(user.uid)
             userNotesRef.child(note.id).removeValue()
         }
+    }
+
+    fun clearNotes() {
+        _notes.value = emptyList()
     }
 }
