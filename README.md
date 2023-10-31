@@ -251,7 +251,7 @@ Logs out the current authenticated user.
 
 Factory class for creating instances of UserViewModel.
 
-## Video Walkthrough
+## Video Walkthroughs
 
 Here's a walkthrough of implemented user stories:
 
@@ -264,6 +264,14 @@ This clip shows the creation of a first user account. It also shows the creation
 ![studio64_fKFO5gHrNh](https://github.com/evan2mak/Notes2/assets/128643914/109bd266-032f-4556-98a6-a2c47d4e4f1c)
 
 This clip shows the first user logging out. Next it shows the creation of a second user account. Next it shows that the notes of the first user do not appear for the second user. The notes belong to only the user(s) that create them.
+
+![studio64_UFwtRsSwb5](https://github.com/evan2mak/Notes2/assets/128643914/3fda8d2e-3ebc-41fe-913b-f8bb47df4a95)
+
+## Firebase Console Screenshots
+
+Here are some screenshot of the firebase console after the previous video walkthroughs.
+
+
 
 ## Notes
 
