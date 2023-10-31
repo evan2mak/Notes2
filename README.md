@@ -251,9 +251,29 @@ Logs out the current authenticated user.
 
 Factory class for creating instances of UserViewModel.
 
-## Video Walkthrough
+## Video Walkthroughs
 
 Here's a walkthrough of implemented user stories:
+
+This clip shows email/password validation edge cases.
+
+![studio64_AH3GhLszgZ](https://github.com/evan2mak/Notes2/assets/128643914/bfb24855-dd2c-48cc-bdc7-78030e977dfe)
+
+This clip shows the creation of a first user account. It also shows the creation of notes, update of a note, and deletion of a note. Also shows that the first user has signed out at the end. Also shows that the first user can no longer be registered, but can sign in again in the same run.
+
+![studio64_fKFO5gHrNh](https://github.com/evan2mak/Notes2/assets/128643914/109bd266-032f-4556-98a6-a2c47d4e4f1c)
+
+This clip shows the first user logging out. Next it shows the creation of a second user account. Next it shows that the notes of the first user do not appear for the second user. The notes belong to only the user(s) that create them.
+
+![studio64_UFwtRsSwb5](https://github.com/evan2mak/Notes2/assets/128643914/3fda8d2e-3ebc-41fe-913b-f8bb47df4a95)
+
+## Firebase Console Screenshots
+
+Here are some screenshot of the firebase console after the previous video walkthroughs.
+
+![Screenshot (218)](https://github.com/evan2mak/Notes2/assets/128643914/8126ac69-3ad7-481c-abac-238ae83eea15)
+
+![Screenshot (219)](https://github.com/evan2mak/Notes2/assets/128643914/93747de5-b9ae-460e-86e5-13a444176e90)
 
 ## Notes
 
