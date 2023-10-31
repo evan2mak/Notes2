@@ -17,7 +17,7 @@ class NoteRepository {
     init {
         FirebaseAuth.getInstance().addAuthStateListener { auth ->
             if (auth.currentUser == null) {
-                _notes.value = emptyList() // Clear notes when user logs out
+                _notes.value = emptyList()
             }
             else {
                 val userNotesRef = notesRef.child(auth.currentUser!!.uid)
@@ -32,7 +32,6 @@ class NoteRepository {
                         _notes.value = notes
                     }
 
-                    // onCancelled: Logs an error if reading from Firebase Database is canceled.
                     override fun onCancelled(error: DatabaseError) {
                         Log.e("NoteRepository", "Failed to read notes", error.toException())
                     }
@@ -66,9 +65,5 @@ class NoteRepository {
             val userNotesRef = notesRef.child(user.uid)
             userNotesRef.child(note.id).removeValue()
         }
-    }
-
-    fun clearNotes() {
-        _notes.value = emptyList()
     }
 }
