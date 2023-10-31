@@ -7,20 +7,28 @@ import androidx.lifecycle.ViewModel
 class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
     val user = userRepository.user
     val navigateToNotesList = MutableLiveData<Boolean>()
+    val errorMessage = MutableLiveData<String?>()
 
     // login: Attempts to log in the user with the provided email and password.
     fun login(email: String, password: String) {
-        userRepository.login(email, password) { success ->
+        userRepository.login(email, password) { success, message ->
             if (success) {
                 navigateToNotesList.postValue(true)
             }
+            else {
+                errorMessage.postValue(message.toString()) // Post error message
+            }
         }
     }
+
     // register: Attempts to register a new user with the provided email and password.
     fun register(email: String, password: String) {
-        userRepository.register(email, password) { success ->
+        userRepository.register(email, password) { success, message ->
             if (success) {
                 navigateToNotesList.postValue(true)
+            }
+            else {
+                errorMessage.postValue(message.toString()) // Post error message
             }
         }
     }

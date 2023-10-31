@@ -49,6 +49,12 @@ class UserScreen : Fragment() {
                 findNavController().navigate(R.id.action_userScreen_to_notesListFragment)
             }
         }
+
+        userViewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
+            errorMessage?.let {
+                Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun onSignInClicked() {
