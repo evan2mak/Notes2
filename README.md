@@ -255,6 +255,14 @@ Factory class for creating instances of UserViewModel.
 
 Here's a walkthrough of implemented user stories:
 
+This clip shows email/password validation edge cases.
+
+![studio64_AH3GhLszgZ](https://github.com/evan2mak/Notes2/assets/128643914/bfb24855-dd2c-48cc-bdc7-78030e977dfe)
+
+This clip shows the creation of a first user account. It also shows the creation of notes, update of a note, and deletion of a note. Also shows that the first user has signed out at the end. Also shows that the first user can no longer be registered, but can sign in again in the same run.
+
+This clip shows the first user logging out. Next it shows the creation of a second user account. Next it shows that the notes of the first user do not appear for the second user. The notes belong to only the user(s) that create them.
+
 ## Notes
 
 The biggest issue I faced was getting familiar with firebase, authentication, and realtime database while tailoring it to this specific implementation. Aside from that, transitioning the code from my previous notes app was not too bad, but I did spend a lot of time getting the hang of the firebase implementation.
