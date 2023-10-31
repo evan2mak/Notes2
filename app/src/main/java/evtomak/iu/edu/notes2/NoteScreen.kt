@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
+import com.google.firebase.auth.FirebaseAuth
 
 // NoteScreen: Activity for creating and editing notes.
 class NoteScreen : AppCompatActivity() {
@@ -17,13 +18,16 @@ class NoteScreen : AppCompatActivity() {
     private lateinit var saveButton: Button
     private lateinit var deleteButton: ImageButton
     private val noteViewModel: NoteViewModel by viewModels { NoteViewModelFactory(NoteRepositorySingleton.getInstance()) }
-
+    private lateinit var auth: FirebaseAuth
     private var existingNoteId: String? = null
 
     // onCreate: Initializes the activity, sets up UI elements and event listeners.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_note_screen)
+
+        // Initialize FirebaseAuth
+        auth = FirebaseAuth.getInstance()
 
         titleEditText = findViewById(R.id.titleEditText)
         noteEditText = findViewById(R.id.noteEditText)
@@ -41,12 +45,12 @@ class NoteScreen : AppCompatActivity() {
             if (title.isNotBlank() && content.isNotBlank()) {
                 if (existingNoteId == null) {
                     // Creating a new note
-                    val newNote = Note(UUID.randomUUID().toString(), title, content)
+                    val newNote = Note(UUID.randomUUID().toString(), auth.currentUser?.uid ?: "", title, content)
                     noteViewModel.addNote(newNote)
                 }
                 else {
                     // Updating an existing note
-                    val updatedNote = Note(existingNoteId!!, title, content)
+                    val updatedNote = Note(existingNoteId!!, auth.currentUser?.uid ?: "", title, content)
                     noteViewModel.updateNote(updatedNote)
                 }
                 finish()
