@@ -261,6 +261,8 @@ This clip shows email/password validation edge cases.
 
 This clip shows the creation of a first user account. It also shows the creation of notes, update of a note, and deletion of a note. Also shows that the first user has signed out at the end. Also shows that the first user can no longer be registered, but can sign in again in the same run.
 
+![studio64_fKFO5gHrNh](https://github.com/evan2mak/Notes2/assets/128643914/109bd266-032f-4556-98a6-a2c47d4e4f1c)
+
 This clip shows the first user logging out. Next it shows the creation of a second user account. Next it shows that the notes of the first user do not appear for the second user. The notes belong to only the user(s) that create them.
 
 ## Notes
